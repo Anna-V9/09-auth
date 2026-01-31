@@ -46,7 +46,12 @@ self.__SERVER_FILES_MANIFEST={
           "search": ""
         }
       ],
-      "remotePatterns": [],
+      "remotePatterns": [
+        {
+          "protocol": "https",
+          "hostname": "ac.goit.global"
+        }
+      ],
       "qualities": [
         75
       ],
@@ -140,7 +145,7 @@ self.__SERVER_FILES_MANIFEST={
       "isExperimentalCompile": false
     }
   },
-  "appDir": "C:\\Users\\trani\\Project\\08-zustand",
+  "appDir": "C:\\Users\\trani\\Project\\09-auth",
   "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",

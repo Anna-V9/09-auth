@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import css from "./NotesPage.module.css";
+import css from './NotesPage.module.css';
 import { useDebounce } from 'use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { fetchNotes } from '@/lib/api';
+import { fetchNotes } from '@/lib/api/api';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Pagination from '@/components/Pagination/Pagination';
 import NoteList from '@/components/NoteList/NoteList';
@@ -24,14 +24,14 @@ function NotesClient({ tag }: Props) {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['notes', page, debouncedSearch, tag ?? 'all'],
-    queryFn: () =>
-      fetchNotes(
-        page,
-        PER_PAGE,
-        debouncedSearch || undefined,
-        tag
-      ),
     placeholderData: keepPreviousData,
+    queryFn: () =>
+      fetchNotes({
+        page,
+        perPage: PER_PAGE,
+        search: debouncedSearch || undefined,
+        tag,
+      }),
   });
 
   const notes = data?.notes ?? [];

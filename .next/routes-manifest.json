@@ -43,6 +43,14 @@
       "namedRegex": "^/\\(\\.\\)notes/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/api/notes/[id]",
+      "regex": "^/api/notes/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/notes/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/notes/filter/[...slug]",
       "regex": "^/notes/filter/(.+?)(?:/)?$",
       "routeKeys": {
@@ -79,10 +87,70 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
+      "page": "/api/auth/login",
+      "regex": "^/api/auth/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/auth/login(?:/)?$"
+    },
+    {
+      "page": "/api/auth/logout",
+      "regex": "^/api/auth/logout(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/auth/logout(?:/)?$"
+    },
+    {
+      "page": "/api/auth/register",
+      "regex": "^/api/auth/register(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/auth/register(?:/)?$"
+    },
+    {
+      "page": "/api/auth/session",
+      "regex": "^/api/auth/session(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/auth/session(?:/)?$"
+    },
+    {
+      "page": "/api/notes",
+      "regex": "^/api/notes(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/notes(?:/)?$"
+    },
+    {
+      "page": "/api/users/me",
+      "regex": "^/api/users/me(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/users/me(?:/)?$"
+    },
+    {
       "page": "/notes/action/create",
       "regex": "^/notes/action/create(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/notes/action/create(?:/)?$"
+    },
+    {
+      "page": "/profile",
+      "regex": "^/profile(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/profile(?:/)?$"
+    },
+    {
+      "page": "/profile/edit",
+      "regex": "^/profile/edit(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/profile/edit(?:/)?$"
+    },
+    {
+      "page": "/sign-in",
+      "regex": "^/sign\\-in(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sign\\-in(?:/)?$"
+    },
+    {
+      "page": "/sign-up",
+      "regex": "^/sign\\-up(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sign\\-up(?:/)?$"
     }
   ],
   "dataRoutes": [],

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { NoteTag } from "@/types/note";
 import NotesClient from "./Notes.client";
-import { fetchNotes } from "@/lib/api";
+import { fetchNotes } from "@/lib/api/api";
 
 import {
   QueryClient,
@@ -56,8 +56,14 @@ export default async function FilteredNotesPage(
   const queryClient = new QueryClient();
 
 await queryClient.prefetchQuery({
-  queryKey: ["notes", 1, "", tag ?? "all"],
-  queryFn: () => fetchNotes(1, 12, undefined, tag),
+  queryKey: ['notes', 1, '', tag ?? 'all'],
+  queryFn: () =>
+    fetchNotes({
+      page: 1,
+      perPage: 12,
+      search: undefined,
+      tag,
+    }),
 });
 
   return (
