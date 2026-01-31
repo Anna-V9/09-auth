@@ -6,6 +6,9 @@ const baseURL = process.env.NEXT_PUBLIC_API_URL + '/api';
 const api = axios.create({
   baseURL,
   withCredentials: true,
+  headers: {
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+  },
 });
 
 type FetchNotesResponse = {
