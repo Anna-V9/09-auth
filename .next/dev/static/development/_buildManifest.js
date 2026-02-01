@@ -1,7 +1,30 @@
 self.__BUILD_MANIFEST = {
   "__rewrites": {
     "afterFiles": [],
-    "beforeFiles": [],
+    "beforeFiles": [
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/.*"
+          }
+        ],
+        "source": "/notes/:nxtPid",
+        "destination": "/(.)notes/:nxtPid"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/.*"
+          }
+        ],
+        "source": "/notes/:nxtPid",
+        "destination": "/(.)notes/:nxtPid"
+      }
+    ],
     "fallback": []
   },
   "sortedPages": [

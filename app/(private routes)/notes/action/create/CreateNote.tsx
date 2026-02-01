@@ -1,7 +1,7 @@
 'use client';
 
 import NoteForm from "@/components/NoteForm/NoteForm";
-import css from "../../../page.module.css";
+import css from "../../../../page.module.css";
 import { useNoteStore } from "@/lib/store/noteStore";
 
 const CreateNoteClient = () => {

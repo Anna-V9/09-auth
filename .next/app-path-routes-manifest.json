@@ -1,6 +1,9 @@
 {
   "/(auth routes)/sign-in/page": "/sign-in",
   "/(auth routes)/sign-up/page": "/sign-up",
+  "/(private routes)/notes/[id]/page": "/notes/[id]",
+  "/(private routes)/notes/action/create/page": "/notes/action/create",
+  "/(private routes)/notes/filter/[...slug]/page": "/notes/filter/[...slug]",
   "/(private routes)/profile/edit/page": "/profile/edit",
   "/(private routes)/profile/page": "/profile",
   "/@modal/(.)notes/[id]/page": "/(.)notes/[id]",
@@ -13,8 +16,5 @@
   "/api/notes/[id]/route": "/api/notes/[id]",
   "/api/notes/route": "/api/notes",
   "/api/users/me/route": "/api/users/me",
-  "/notes/[id]/page": "/notes/[id]",
-  "/notes/action/create/page": "/notes/action/create",
-  "/notes/filter/[...slug]/page": "/notes/filter/[...slug]",
   "/page": "/"
 }

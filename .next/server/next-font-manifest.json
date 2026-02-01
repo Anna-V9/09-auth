@@ -6,6 +6,15 @@
     "[project]/app/(auth routes)/sign-up/page": [
       "static/media/ce62453a442c7f35-s.p.a9507876.woff2"
     ],
+    "[project]/app/(private routes)/notes/[id]/page": [
+      "static/media/ce62453a442c7f35-s.p.a9507876.woff2"
+    ],
+    "[project]/app/(private routes)/notes/action/create/page": [
+      "static/media/ce62453a442c7f35-s.p.a9507876.woff2"
+    ],
+    "[project]/app/(private routes)/notes/filter/[...slug]/page": [
+      "static/media/ce62453a442c7f35-s.p.a9507876.woff2"
+    ],
     "[project]/app/(private routes)/profile/edit/page": [
       "static/media/ce62453a442c7f35-s.p.a9507876.woff2"
     ],
@@ -16,15 +25,6 @@
       "static/media/ce62453a442c7f35-s.p.a9507876.woff2"
     ],
     "[project]/app/_not-found/page": [
-      "static/media/ce62453a442c7f35-s.p.a9507876.woff2"
-    ],
-    "[project]/app/notes/[id]/page": [
-      "static/media/ce62453a442c7f35-s.p.a9507876.woff2"
-    ],
-    "[project]/app/notes/action/create/page": [
-      "static/media/ce62453a442c7f35-s.p.a9507876.woff2"
-    ],
-    "[project]/app/notes/filter/[...slug]/page": [
       "static/media/ce62453a442c7f35-s.p.a9507876.woff2"
     ],
     "[project]/app/page": [
