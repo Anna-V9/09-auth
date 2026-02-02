@@ -1,58 +1,62 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import css from "./NoteForm.module.css";
-import { useNoteStore, DraftNote } from "@/lib/store/noteStore";
-import { useRouter } from "next/navigation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState, useEffect } from 'react';
+import css from './NoteForm.module.css';
+import { useNoteStore, DraftNote } from '@/lib/store/noteStore';
+import { useRouter } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createNote as createNoteApi } from '@/lib/api/clientApi';
+import type { NoteTag } from '@/types/note';
 
 interface NoteFormProps {
   onSuccess?: () => void;
   onCancel?: () => void;
 }
 
-const createNote = async (note: DraftNote) => {
-  const res = await fetch("/api/notes", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(note),
-  });
 
-  if (!res.ok) {
-    throw new Error("Failed to create note");
-  }
-
-  return res.json();
-};
+interface NoteFormState extends DraftNote {
+  tag: NoteTag;
+}
 
 const NoteForm: React.FC<NoteFormProps> = ({ onSuccess, onCancel }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { draft, setDraft, clearDraft } = useNoteStore();
 
-  const [form, setForm] = useState<DraftNote>(draft);
+  
+  const initialForm: NoteFormState = {
+    ...draft,
+    tag: (draft.tag as NoteTag) || 'Todo',
+  };
+
+  const [form, setForm] = useState<NoteFormState>(initialForm);
 
   useEffect(() => {
     setDraft(form);
   }, [form, setDraft]);
 
   const mutation = useMutation({
-    mutationFn: createNote,
+    mutationFn: (note: NoteFormState) =>
+      createNoteApi(note), 
     onSuccess: () => {
       clearDraft();
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      queryClient.invalidateQueries({ queryKey: ['notes'] });
       onSuccess?.();
       router.back();
     },
   });
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+
+    
+    if (name === 'tag') {
+      setForm((prev) => ({ ...prev, tag: value as NoteTag }));
+    } else {
+      setForm((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -125,7 +129,7 @@ const NoteForm: React.FC<NoteFormProps> = ({ onSuccess, onCancel }) => {
           className={css.submitButton}
           disabled={mutation.isPending}
         >
-          {mutation.isPending ? "Creating..." : "Create note"}
+          {mutation.isPending ? 'Creating...' : 'Create note'}
         </button>
       </div>
     </form>

@@ -3,22 +3,23 @@ import css from "./NotePreview.module.css";
 import { useParams, useRouter } from "next/navigation";
 import Modal from "@/components/Modal/Modal";
 import { useQuery } from "@tanstack/react-query";
-import { fetchNoteById } from "@/lib/api/api";
+import { fetchNoteById } from "@/lib/api/clientApi"; 
 
 function NotePreview() {
-    const router = useRouter();
-    const close = () => router.back();
-    const params = useParams<{ id: string }>();
-    const id = params?.id;
+  const router = useRouter();
+  const close = () => router.back();
 
-    const { data: note, isLoading, error } = useQuery({
-        queryKey: ["note", id],
-        queryFn: () => fetchNoteById(id),
-        enabled: Boolean(id),
-        refetchOnMount: false,
-    });
+  const params = useParams<{ id: string }>();
+  const id = params?.id;
 
-    if (isLoading) {
+  const { data: note, isLoading, error } = useQuery({
+    queryKey: ["note", id],
+    queryFn: () => fetchNoteById(id),
+    enabled: Boolean(id),
+    refetchOnMount: false,
+  });
+
+  if (isLoading) {
     return (
       <Modal onClose={close}>
         <div className={css.container}>Loading, please wait...</div>
@@ -52,8 +53,7 @@ function NotePreview() {
         </div>
       </div>
     </Modal>
-    );
-
+  );
 }
 
 export default NotePreview;

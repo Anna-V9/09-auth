@@ -1,25 +1,16 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { NextRequest, NextResponse } from 'next/server';
+import { refreshSession } from '@/lib/api/serverApi';
 
-interface ProxyOptions {
-  isPrivate?: boolean; 
-  redirectIfAuthenticated?: string; 
-  redirectIfUnauthenticated?: string; 
-}
+export async function proxy(req: NextRequest) {
+  const { pathname } = req.nextUrl;
 
-export async function proxy(options: ProxyOptions) {
-  const { isPrivate, redirectIfAuthenticated, redirectIfUnauthenticated } = options;
+  const accessToken = req.cookies.get('accessToken')?.value;
+  const refreshToken = req.cookies.get('refreshToken')?.value;
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value; 
-
-  if (isPrivate && !token) {
-    redirect(redirectIfUnauthenticated ?? '/sign-in');
+  
+  if (!accessToken && pathname.startsWith('/profile')) {
+    return NextResponse.redirect(new URL('/sign-in', req.url));
   }
 
-  if (!isPrivate && token) {
-    redirect(redirectIfAuthenticated ?? '/profile');
-  }
-
-  return token;
+  return NextResponse.next();
 }

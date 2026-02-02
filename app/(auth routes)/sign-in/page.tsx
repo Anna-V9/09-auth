@@ -2,11 +2,16 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { login } from '@/lib/api/clientApi';
+
 import css from './SignInPage.module.css';
+import { login } from '@/lib/api/clientApi';
+import { useAuthStore } from '@/lib/store/authStore';
 
 const SignInPage = () => {
   const router = useRouter();
+
+  const { setUser } = useAuthStore(); 
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,10 +21,13 @@ const SignInPage = () => {
     setError('');
 
     try {
-      await login({ email, password }); 
-      router.push('/profile'); 
+      const user = await login({ email, password });
+
+      setUser(user); 
+
+      router.push('/profile');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to login');
+      setError(err?.response?.data?.message || 'Failed to login');
     }
   };
 
