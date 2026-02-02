@@ -26,7 +26,7 @@ export default function NoteDetailsClient({ noteId }: NoteDetailsClientProps) {
   }
 
   if (error || !note) {
-    return <p>Something went wrong.</p>;
+    return <p>Something went wrong</p>;
   }
 
   const formattedDate = note.updatedAt
