@@ -11,7 +11,7 @@ export default function Home() {
       in one place, whether you are at home or on the go.
     </p>
     <p className={css.description}>
-      The app provides a clean interface for writing, editing and browsing
+      The app provides a clean interface for writing, editing, and browsing
       notes. With support for keyword search and structured organization,
       NoteHub offers a streamlined experience for anyone who values clarity
       and productivity.
