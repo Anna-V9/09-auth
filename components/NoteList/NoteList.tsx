@@ -1,9 +1,10 @@
 'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { Note } from '../../types/note';
-import { deleteNote } from '../../lib/api/clientApi'; 
+import { deleteNote } from '../../lib/api/clientApi';
 import styles from './NoteList.module.css';
 
 interface NoteListProps {
@@ -19,7 +20,9 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
       queryClient.invalidateQueries({ queryKey: ['notes'] }),
   });
 
-  if (!notes.length) return <p>No notes found.</p>;
+  if (!notes.length) {
+    return <p>No notes found.</p>;
+  }
 
   return (
     <ul className={styles.list}>
@@ -29,7 +32,10 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
 
           <p className={styles.content}>{note.content}</p>
 
-          {note.tag && <span className={styles.tag}>{note.tag}</span>}
+          {}
+          <span className={styles.tag}>
+            {note.tag ?? '—'}
+          </span>
 
           <Link href={`/notes/${note.id}`} className={styles.link}>
             View details

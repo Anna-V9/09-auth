@@ -21,7 +21,6 @@ export const metadata: Metadata = {
 };
 
 const ProfilePage = async () => {
-  
   const user = await getCurrentUser();
 
   return (
@@ -30,7 +29,6 @@ const ProfilePage = async () => {
         <div className={css.header}>
           <h1 className={css.formTitle}>Profile Page</h1>
 
-          {}
           <Link
             href="/profile/edit"
             className={css.editProfileButton}
@@ -40,10 +38,9 @@ const ProfilePage = async () => {
         </div>
 
         <div className={css.avatarWrapper}>
-          {}
           <Image
-            src="https://ac.goit.global/fullstack/react/avatar-default.jpg"
-            alt="User Avatar"
+            src={user.avatar}
+            alt={`${user.username ?? 'User'} avatar`}
             width={120}
             height={120}
             className={css.avatar}

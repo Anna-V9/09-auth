@@ -1,12 +1,13 @@
-import axios from 'axios';
+import axios, { type AxiosResponse } from 'axios';
 import { cookies } from 'next/headers';
 import type { Note, NoteTag } from '@/types/note';
 import type { User } from '@/types/user';
 
 const baseURL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 
+
 const serverApi = async () => {
-  const cookieStore = cookies(); 
+  const cookieStore = cookies();
 
   return axios.create({
     baseURL,
@@ -29,9 +30,16 @@ export const fetchNotes = async (
   tag?: NoteTag
 ): Promise<NotesResponse> => {
   const api = await serverApi();
+
   const { data } = await api.get<NotesResponse>('/notes', {
-    params: { page, perPage, search, ...(tag ? { tag } : {}) },
+    params: {
+      page,
+      perPage,
+      search,
+      ...(tag ? { tag } : {}),
+    },
   });
+
   return data;
 };
 
@@ -50,18 +58,20 @@ export const getCurrentUser = async (): Promise<User> => {
 };
 
 
-export const checkSession = async (): Promise<User | null> => {
+ 
+export const checkSession = async (): Promise<AxiosResponse<User> | null> => {
   try {
     const api = await serverApi();
-    const { data } = await api.get<User>('/auth/session');
-    return data;
+    return await api.get<User>('/auth/session');
   } catch {
     return null;
   }
 };
 
 
-export const refreshSession = async (refreshToken: string): Promise<{
+export const refreshSession = async (
+  refreshToken: string
+): Promise<{
   accessToken: string;
   refreshToken: string;
 }> => {
