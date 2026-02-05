@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import { refreshSession } from '@/lib/api/serverApi';
 
 const PRIVATE_ROUTES = ['/profile', '/notes'];
@@ -7,8 +8,10 @@ const AUTH_ROUTES = ['/sign-in', '/sign-up'];
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  const accessToken = req.cookies.get('accessToken')?.value;
-  const refreshToken = req.cookies.get('refreshToken')?.value;
+  const cookieStore = await cookies();
+
+  const accessToken = cookieStore.get('accessToken')?.value;
+  const refreshToken = cookieStore.get('refreshToken')?.value;
 
   const isPrivateRoute = PRIVATE_ROUTES.some(route =>
     pathname.startsWith(route),
@@ -18,9 +21,8 @@ export async function proxy(req: NextRequest) {
     pathname.startsWith(route),
   );
 
-
+ 
   if (accessToken) {
-    
     if (isAuthRoute) {
       return NextResponse.redirect(new URL('/', req.url));
     }
@@ -28,13 +30,13 @@ export async function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
+  
   if (!accessToken && refreshToken) {
     try {
       const response = await refreshSession(refreshToken);
 
       const nextResponse = NextResponse.next();
 
-     
       nextResponse.cookies.set('accessToken', response.accessToken, {
         httpOnly: true,
         path: '/',
@@ -45,14 +47,12 @@ export async function proxy(req: NextRequest) {
         path: '/',
       });
 
-    
       if (isAuthRoute) {
         return NextResponse.redirect(new URL('/', req.url));
       }
 
       return nextResponse;
     } catch {
-     
       const redirectResponse = NextResponse.redirect(
         new URL('/sign-in', req.url),
       );
@@ -64,7 +64,7 @@ export async function proxy(req: NextRequest) {
     }
   }
 
-  
+  /** 3. Неавторизований користувач на приватному маршруті */
   if (!accessToken && isPrivateRoute) {
     return NextResponse.redirect(new URL('/sign-in', req.url));
   }
